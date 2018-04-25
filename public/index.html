@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="http://localhost:3002/styles.css">
     <link rel="stylesheet" href="http://localhost:3003/styles.css">
     <link rel="stylesheet" href="http://localhost:3004/styles.css">
-    <link rel="stylesheet" href="http://localhost:3005/styles.css">
+    <link rel="stylesheet" href="http://localhost:3006/styles.css">
     <title>NotAirBnB</title>
   </head>
   <body>
@@ -17,11 +17,9 @@
       <div id="Navbar"></div>
       <div id="Campaign"></div>
       <div id="Updates" class="hidden"></div>
+      <div id="Comments" class="hidden"></div>
       <div id="Community" class="hidden"></div>
     </div>
-    <script>
-      
-    </script>
     <script src="lib/react-development.js"></script>
     <script src="lib/react-dom.development.js"></script>
     <script src="http://localhost:3001/bundle.js"></script>
@@ -29,52 +27,7 @@
     <script src="http://localhost:3003/bundle.js"></script>
     <script src="http://localhost:3004/bundle.js"></script>
     <script src="http://localhost:3005/bundle.js"></script>
-    <script>
-      const navbar = document.getElementsByClassName('navbarContainerWrapper')[0];
-
-      window.addEventListener('scroll', () => {  
-        const summary = document.getElementById('Summary');
-        if (navbar.classList.contains('sticky')) {
-          if (summary.getBoundingClientRect().top > -730) {
-            navbar.classList.remove('sticky');
-          }
-        } else {
-          if (navbar.getBoundingClientRect().top < 0) {
-            navbar.classList.add('sticky');
-          }
-        }
-      }, true);
-
-      const campaignButton = document.getElementById('campaign');
-      const faqButton = document.getElementById('faq');
-      const updatesButton = document.getElementById('updates');
-      const commentsButton = document.getElementById('comments');
-      const communityButton = document.getElementById('community');
-      let previouslyRendered = 'Campaign';
-      let component;
-
-      const hideComponent = (component) => {
-        component = document.getElementById(previouslyRendered);
-        component.classList.add('hidden');
-      }
-      campaignButton.addEventListener('click', () => {
-        hideComponent(previouslyRendered);
-        const Campaign = document.getElementById('Campaign');
-        Campaign.classList.remove('hidden');
-        previouslyRendered = 'Campaign';
-      });
-      updatesButton.addEventListener('click', () => {
-        hideComponent(previouslyRendered);
-        const Updates = document.getElementById('Updates');
-        Updates.classList.remove('hidden');
-        previouslyRendered = 'Updates';
-      });
-      communityButton.addEventListener('click', () => {
-        hideComponent(previouslyRendered);
-        const Community = document.getElementById('Community');
-        Community.classList.remove('hidden');
-        previouslyRendered = 'Community';
-      });
-    </script>
+    <script src="http://localhost:3006/bundle.js"></script>
+    <script src="http://localhost:3002/navbarControl.js"></script>
   </body>
 </html>

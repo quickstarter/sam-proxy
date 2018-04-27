@@ -6,7 +6,7 @@
     <link href="https://d3mlfyygrfdi2i.cloudfront.net/favicon.png?v=2" rel="icon" type="image/png">
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="http://www.samgetlan.com/navbar/styles.css">
-    <link rel="stylesheet" href="http://www.samgetlan.com/campaign/styles.css">
+    <link rel="stylesheet" href="http://fec-kickstarter-campaign-module.s3-website-us-west-1.amazonaws.com/styles.css">
     <link rel="stylesheet" href="http://www.samgetlan.com/updates/styles.css">
     <link rel="stylesheet" href="http://www.samgetlan.com/community/styles.css">
     <title>NotAirBnB</title>
@@ -22,12 +22,39 @@
     </div>
     <script src="lib/react-development.js"></script>
     <script src="lib/react-dom.development.js"></script>
-    <script src="http://www.samgetlan.com/summary/bundle.js"></script>
+    <script src="https://s3-us-west-1.amazonaws.com/hackreactorfec/bundle.js"></script>
     <script src="http://www.samgetlan.com/navbar/bundle.js"></script>
-    <script src="http://www.samgetlan.com/campaign/bundle.js"></script>
+    <script src="http://fec-kickstarter-campaign-module.s3-website-us-west-1.amazonaws.com/bundle.js"></script>
     <script src="http://www.samgetlan.com/updates/bundle.js"></script>
     <script src="http://www.samgetlan.com/comments/bundle.js"></script>
     <script src="http://www.samgetlan.com/community/bundle.js"></script>
+    <script>
+      const project = window.location.href.split('?')[1];
+      ReactDOM.render(
+        React.createElement(Navbar, {projectId: project}),
+        document.getElementById('Navbar')
+      );
+      ReactDOM.render(
+        React.createElement(Community, {projectId: project}),
+        document.getElementById('Community')
+      );
+      ReactDOM.render(
+        React.createElement(Campaign, {projectId: project}),
+        document.getElementById('Campaign')
+      );
+      ReactDOM.render(
+        React.createElement(Summary, {projectId: project}),
+        document.getElementById('Summary')
+      );
+      ReactDOM.render(
+        React.createElement(Updates, {projectId: project}),
+        document.getElementById('Updates')
+      );
+      ReactDOM.render(
+        React.createElement(Comments, {projectId: project}),
+        document.getElementById('Comments')
+      );
+    </script>
     <script src="http://www.samgetlan.com/navbar/navbarControl.js"></script>
   </body>
 </html>

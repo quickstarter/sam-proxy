@@ -6,7 +6,6 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.set('view engine', 'ejs');
 
 app.use(morgan('dev'));
 app.use(cors());

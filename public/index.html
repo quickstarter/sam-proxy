@@ -6,8 +6,8 @@
     <link href="https://d3mlfyygrfdi2i.cloudfront.net/favicon.png?v=2" rel="icon" type="image/png">
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="http://www.samgetlan.com/navbar/styles.css">
-    <link rel="stylesheet" href="http://fec-kickstarter-campaign-module.s3-website-us-west-1.amazonaws.com/styles.css">
-    <link rel="stylesheet" href="http://www.samgetlan.com/updates/styles.css">
+    <link rel="stylesheet" href="http://s3-us-west-1.amazonaws.com/fec-kickstarter-campaign-module/styles.css">
+    <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/updates-and-comments/Updates/styles.css">
     <link rel="stylesheet" href="http://www.samgetlan.com/community/styles.css">
     <title>NotAirBnB</title>
   </head>
@@ -22,14 +22,14 @@
     </div>
     <script src="lib/react-development.js"></script>
     <script src="lib/react-dom.development.js"></script>
-    <script src="https://s3-us-west-1.amazonaws.com/hackreactorfec/bundle.js"></script>
+    <script src="http://s3-us-west-1.amazonaws.com/hackreactorfec/bundle.js"></script>
     <script src="http://www.samgetlan.com/navbar/bundle.js"></script>
-    <script src="http://fec-kickstarter-campaign-module.s3-website-us-west-1.amazonaws.com/bundle.js"></script>
-    <script src="http://www.samgetlan.com/updates/bundle.js"></script>
-    <script src="http://www.samgetlan.com/comments/bundle.js"></script>
+    <script src="http://s3-us-west-1.amazonaws.com/updates-and-comments/Updates/bundle.js"></script>
     <script src="http://www.samgetlan.com/community/bundle.js"></script>
+    <script src="http://s3-us-west-1.amazonaws.com/fec-kickstarter-campaign-module/bundle.js"></script>
+    <script src="https://s3-us-west-1.amazonaws.com/updates-and-comments/Comments/bundle.js"></script>
     <script>
-      const project = window.location.href.split('?')[1];
+      const project = window.location.href.split('?')[1] || 0;
       ReactDOM.render(
         React.createElement(Navbar, {projectId: project}),
         document.getElementById('Navbar')
@@ -39,11 +39,11 @@
         document.getElementById('Community')
       );
       ReactDOM.render(
-        React.createElement(Campaign, {projectId: project}),
+        React.createElement(Campaign, {projectId: project, username: "Saige99"}),
         document.getElementById('Campaign')
       );
       ReactDOM.render(
-        React.createElement(Summary, {projectId: project}),
+        React.createElement(App, {projectId: project}),
         document.getElementById('Summary')
       );
       ReactDOM.render(

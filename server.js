@@ -13,7 +13,7 @@ const Bluebird = require('bluebird');
 const fs = Bluebird.promisifyAll(require('fs'));
 const axios = require('axios');
 
-const HtmlTemplate = require('./template.js');
+const HtmlTemplate = require('./templates/template.js');
 const serviceServers = require('./serviceServers.js');
 const clientBundleFolder = './public/services';
 const serverBundleFolder = './templates/services';

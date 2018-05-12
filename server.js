@@ -1,7 +1,6 @@
 require('newrelic');
 // Modules for basic server functionality
 const express = require('express');
-const morgan = require('morgan');
 const path = require('path');
 const cors = require('cors');
 const cluster = require('cluster');
@@ -12,7 +11,7 @@ const React = require('react');
 const ReactDOM = require('react-dom/server');
 const Bluebird = require('bluebird');
 const fs = Bluebird.promisifyAll(require('fs'));
-const fetch = require('node-fetch');
+const axios = require('axios');
 
 const HtmlTemplate = require('./template.js');
 const serviceServers = require('./serviceServers.js');
@@ -23,11 +22,11 @@ const services = {};
 // Get each service's bundle from component server if you don't have it yet
 // Then add server-side bundles as properties on 'services'
 (async function getAndReadBundles() {
-  ['client', 'server'].forEach(domain => {
+  ['client', 'server'].forEach(async domain => {
     const forServer = domain === 'server';
     const serviceNames = Object.keys(serviceServers[domain]);
 
-    serviceNames.forEach(serviceName => {
+    serviceNames.forEach(async serviceName => {
       const folder = forServer ? serverBundleFolder : clientBundleFolder;
       const file = folder + '/' + serviceName + '.js';
 
@@ -36,8 +35,8 @@ const services = {};
         forServer ? services[serviceName] = require(file) : require(file); 
       } catch (nonexistentFileErr) {
         try {
-          const bundle = await fetch(serviceServers[domain][serviceName]);
-          await fs.writeFileAsync(file, bundle);
+          const bundleResponse = await axios.get(serviceServers[domain][serviceName]);
+          await fs.writeFileAsync(file, bundleResponse.data);
           forServer ? services[serviceName] = require(file) : null;
         } catch (err) {
           console.error(err);
@@ -49,13 +48,14 @@ const services = {};
 })();
 
 const getDataAndSSR = async (serviceName, id) => {
-  const data = await fetch(serviceServers.data[serviceName]);
-  return ReactDOM.renderToString(React.createElement(services[serviceName], data));
+  const dataResponse = await axios.get(serviceServers.data[serviceName] + id);
+  const data = dataResponse.data;
+  return ReactDOM.renderToString(React.createElement(services[serviceName], {data}));
 };
 const renderComponentStrings = async (components, id = 0) => {
   return Object.keys(components)
-    .reduce(name => 
-      `<div id=${name}>${await getDataAndSSR(name, props))}</div>`, '');
+    .reduce(async (body, name) => 
+      `<div id=${name}>${await getDataAndSSR(name, id)}</div>`, '');
 }
 
 const port = process.env.PORT || 3000;
@@ -75,11 +75,15 @@ if (cluster.isMaster && cpuCount > 1) {
   });
 } else {
   const app = express();
-  // app.use(morgan('dev'));
   app.use(cors());
   app.get('/', async (req, res) => {
-    const body = await renderComponentStrings(services, Object.keys(req.query)[0]);
-    res.send(HtmlTemplate(body, Object.keys(services)));
+    try {
+      const body = await renderComponentStrings(services, Object.keys(req.query)[0]);
+      res.send(HtmlTemplate(body, Object.keys(services)));
+    } catch (err) {
+      console.error(err);
+      res.sendStatus(500);
+    }
   });
   app.use(express.static(path.join(__dirname, 'public')));
 

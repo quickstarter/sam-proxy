@@ -5,7 +5,7 @@ module.exports = {
     // Campaign: 'http://127.0.0.1:3003/bundle',
     // Updates: 'http://127.0.0.1:3004/bundle',
     // Comments: 'http://127.0.0.1:3005/bundle',
-    Community: 'http://127.0.0.1:3006/clientBundle',
+    Community: 'http://127.0.0.1:3006/clientFetchDataBundle.js',
   },
 
   server: {
@@ -14,7 +14,7 @@ module.exports = {
     // Campaign: 'http://127.0.0.1:3003/serverBundle',
     // Updates: 'http://127.0.0.1:3004/serverBundle',
     // Comments: 'http://127.0.0.1:3005/serverBundle',
-    Community: 'http://127.0.0.1:3006/serverBundle',
+    Community: 'http://127.0.0.1:3006/serverBundle.js',
   },
   
   data: {

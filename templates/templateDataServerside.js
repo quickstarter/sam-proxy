@@ -1,4 +1,4 @@
-module.exports = (body, serviceNames) => `
+module.exports = (body, servicesData) => `
   <!DOCTYPE html>
   <html lang="en">
     <head>
@@ -9,13 +9,14 @@ module.exports = (body, serviceNames) => `
     ${body}
       <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
       <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-      ${serviceNames.map(service => `<script src="/services/${service}.js"></script>`).join('\n')}
+      ${servicesData.map(([serviceName]) => `<script src="/services/${serviceName}.js"></script>`).join('\n')}
       <script>
-        console.log(Community);
-        ${serviceNames.map(service => `
+        ${servicesData.map(([serviceName, data])=> `
+          const props = JSON.parse(\`${JSON.stringify(data)}\`);
+          console.log(props);
           ReactDOM.hydrate(
-            React.createElement(${service}.default),
-            document.getElementById('${service}')
+            React.createElement(${serviceName}, props),
+            document.getElementById('${serviceName}')
           );`).join('\n')}
       </script>
     </body>

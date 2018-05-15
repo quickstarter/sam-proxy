@@ -13,7 +13,6 @@ module.exports = (body, servicesData) => `
       <script>
         ${servicesData.map(([serviceName, data])=> `
           const props = JSON.parse(\`${JSON.stringify(data)}\`);
-          console.log(props);
           ReactDOM.hydrate(
             React.createElement(${serviceName}, props),
             document.getElementById('${serviceName}')

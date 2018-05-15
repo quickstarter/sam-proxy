@@ -12,8 +12,8 @@ module.exports = (services, id) => `
     ${services.map(([name, component]) => 
       `<div id=${name}>
         ${ReactDOM.renderToString(React.createElement(component, {projectId: id}))}
-      </div>`, '')
-      }
+      </div>`)
+    }
       <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
       <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
       ${services.map(([name]) => `<script src="/services/${name}.js"></script>`).join('\n')}
